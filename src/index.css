@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+/* Configuración de Tailwind v4 */
+@theme {
+  --color-lila-fondo: #FDF9FF;
+  --color-lila-principal: #8E44AD;
+  --color-lila-claro: #D7BDE2;
+  --color-lila-texto: #2C3E50;
+
+  --font-sans: "Poppins", sans-serif;
+  --font-serif: "Playfair Display", serif;
+
+  --drop-shadow-brillo: 0 10px 25px rgba(142, 68, 173, 0.4);
+}
+
+/* Reglas base y Scroll Snap */
+@layer base {
+  html {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    background-color: var(--color-lila-fondo);
+    color: var(--color-lila-texto);
+    font-family: var(--font-sans);
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+}
