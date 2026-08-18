@@ -3,10 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin } from 'lucide-react'; // Icono de mapa
 
 export default function Ceremonia() {
+  const BASE = import.meta.env.BASE_URL;
+
   // Fotos locales desde la carpeta public/fotos_ceremonia/
   const fotos = [
-    "/fotos_ceremonia/foto-1-iglesia.jpeg",
-    "/fotos_ceremonia/foto-2-iglesia.jpeg"
+    `${BASE}fotos_ceremonia/foto-1-iglesia.jpeg`,
+    `${BASE}fotos_ceremonia/foto-2-iglesia.jpeg`
   ];
 
   const [index, setIndex] = useState(0);

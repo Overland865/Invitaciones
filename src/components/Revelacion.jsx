@@ -2,13 +2,15 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 export default function Revelacion() {
+  const BASE = import.meta.env.BASE_URL;
+
   // Fotografías oficiales temáticas de XV Años (guardadas en public/galeria/)
   const fotos = [
-    "/galeria/foto2_vestido.jpg",
-    "/galeria/foto5_retrato.jpg",
-    "/galeria/foto4_vals.jpg",
-    "/galeria/foto3_pastel.jpg",
-    "/galeria/foto1_zapatillas.jpg"
+    `${BASE}galeria/foto2_vestido.jpg`,
+    `${BASE}galeria/foto5_retrato.jpg`,
+    `${BASE}galeria/foto4_vals.jpg`,
+    `${BASE}galeria/foto3_pastel.jpg`,
+    `${BASE}galeria/foto1_zapatillas.jpg`
   ];
 
   const [current, setCurrent] = useState(0);
@@ -68,7 +70,7 @@ export default function Revelacion() {
         viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 1.2, delay: 0.2 }}
       >
-        Valeria
+        Yoselin
       </motion.h2>
 
     </section>

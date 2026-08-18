@@ -3,12 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin } from 'lucide-react';
 
 export default function Recepcion() {
+  const BASE = import.meta.env.BASE_URL;
+
   // Fotos desde la carpeta public/fotos_local/
-  // (Asegúrate de colocar los archivos con estos nombres en public/fotos_local/)
   const fotos = [
-    "/fotos_local/foto-1-local.jpeg",
-    "/fotos_local/foto-2-local.jpeg",
-    "/fotos_local/foto-3-local.jpeg"
+    `${BASE}fotos_local/foto-1-local.jpeg`,
+    `${BASE}fotos_local/foto-2-local.jpeg`
   ];
 
   const [index, setIndex] = useState(0);

@@ -1,22 +1,24 @@
 import { motion } from 'framer-motion';
 
 export default function Galeria() {
+  const BASE = import.meta.env.BASE_URL;
+
   // Fotografías oficiales temáticas de XV Años (guardadas en public/galeria/)
   const fotos = [
     // 1. Zapatillas de cristal, tiara y detalles
-    "/galeria/foto1_zapatillas.jpg",
+    `${BASE}galeria/foto1_zapatillas.jpg`,
     
     // 2. Sesión en jardín con vestido lila de princesa
-    "/galeria/foto2_vestido.jpg",
+    `${BASE}galeria/foto2_vestido.jpg`,
     
     // 3. Pastel monumental de XV Años con número 15
-    "/galeria/foto3_pastel.jpg",
+    `${BASE}galeria/foto3_pastel.jpg`,
     
     // 4. El vals de quinceañera en la pista con humo y luces
-    "/galeria/foto4_vals.jpg",
+    `${BASE}galeria/foto4_vals.jpg`,
     
     // 5. Retrato formal con ramo y corona de quinceañera
-    "/galeria/foto5_retrato.jpg"
+    `${BASE}galeria/foto5_retrato.jpg`
   ];
 
   return (
