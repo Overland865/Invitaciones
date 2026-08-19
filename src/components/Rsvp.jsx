@@ -7,6 +7,7 @@ export default function Rsvp({ invitado = { nombre: 'Invitado Especial', pases: 
   const [opcion, setOpcion] = useState(null); 
   const [pasesSeleccionados, setPasesSeleccionados] = useState(invitado.pases || 1);
   const [cargando, setCargando] = useState(false);
+  const [respuestaPrevia, setRespuestaPrevia] = useState(null);
 
   // Mantener sincronizado el selector con los pases del invitado
   useEffect(() => {
@@ -14,6 +15,58 @@ export default function Rsvp({ invitado = { nombre: 'Invitado Especial', pases: 
       setPasesSeleccionados(invitado.pases);
     }
   }, [invitado]);
+
+  // Verificar si el invitado ya respondió anteriormente (en Supabase y en localStorage)
+  useEffect(() => {
+    let montado = true;
+
+    const consultarRespuestaExistente = async () => {
+      if (!invitado?.nombre) return;
+
+      const nomLimpio = invitado.nombre.trim();
+      const localKey = `rsvp_contestada_${nomLimpio.toLowerCase()}`;
+
+      // 1. Revisar caché local inmediata
+      try {
+        const local = localStorage.getItem(localKey);
+        if (local) {
+          const parsed = JSON.parse(local);
+          if (parsed && (parsed.estado === 'confirmado' || parsed.estado === 'rechazado')) {
+            if (montado) setRespuestaPrevia(parsed);
+          }
+        }
+      } catch (e) {
+        console.error(e);
+      }
+
+      // 2. Revisar base de datos Supabase
+      try {
+        const { data, error } = await supabase
+          .from('rsvps')
+          .select('estado, pases_confirmados, pases_asignados')
+          .eq('nombre_familia', nomLimpio)
+          .limit(1);
+
+        if (!error && data && data.length > 0) {
+          const reg = data[0];
+          if (reg.estado === 'confirmado' || reg.estado === 'rechazado') {
+            if (montado) {
+              setRespuestaPrevia(reg);
+              localStorage.setItem(localKey, JSON.stringify(reg));
+            }
+          }
+        }
+      } catch (err) {
+        console.error('Error al consultar estado de confirmación:', err);
+      }
+    };
+
+    consultarRespuestaExistente();
+
+    return () => {
+      montado = false;
+    };
+  }, [invitado?.nombre]);
 
   // Bloquea el scroll general mientras el modal del formulario está activo
   useEffect(() => {
@@ -30,7 +83,7 @@ export default function Rsvp({ invitado = { nombre: 'Invitado Especial', pases: 
     };
   }, [opcion]);
 
-   const numeroWhatsApp = "529993188334"; 
+  const numeroWhatsApp = "529993188334"; 
 
   const enviarWhatsApp = async (e) => {
     e.preventDefault();
@@ -39,12 +92,13 @@ export default function Rsvp({ invitado = { nombre: 'Invitado Especial', pases: 
     try {
       const cantidadFinal = opcion === 'si' ? parseInt(pasesSeleccionados) : 0;
       const estadoNuevo = opcion === 'si' ? 'confirmado' : 'rechazado';
+      const nomLimpio = invitado.nombre.trim();
 
       // 1. ACTUALIZAR O INSERTAR EN SUPABASE
       const { data: existente } = await supabase
         .from('rsvps')
         .select('id')
-        .eq('nombre_familia', invitado.nombre)
+        .eq('nombre_familia', nomLimpio)
         .limit(1);
 
       if (existente && existente.length > 0) {
@@ -60,7 +114,7 @@ export default function Rsvp({ invitado = { nombre: 'Invitado Especial', pases: 
           .from('rsvps')
           .insert([
             { 
-              nombre_familia: invitado.nombre, 
+              nombre_familia: nomLimpio, 
               pases_asignados: invitado.pases,
               pases_confirmados: cantidadFinal, 
               estado: estadoNuevo
@@ -68,15 +122,28 @@ export default function Rsvp({ invitado = { nombre: 'Invitado Especial', pases: 
           ]);
       }
 
-      // 2. ARMAR EL TEXTO PARA WHATSAPP
-      let textoWa = '';
-      if (opcion === 'si') {
-        textoWa = `Buen día, Confirmo mi asistencia a los XV años.\n\n- Nombre: *${invitado.nombre}*\n- Pases a utilizar: *${cantidadFinal} de ${invitado.pases} asignados*`;
-      } else {
-        textoWa = `Buen día, Soy *${invitado.nombre}*. Lamentablemente no podré asistir a los XV años, pero les agradezco mucho la invitación y les deseo lo mejor.`;
+      // 2. Guardar estado local para que no pueda volver a responder
+      const infoRegistrada = {
+        estado: estadoNuevo,
+        pases_confirmados: cantidadFinal,
+        pases_asignados: invitado.pases
+      };
+      setRespuestaPrevia(infoRegistrada);
+      try {
+        localStorage.setItem(`rsvp_contestada_${nomLimpio.toLowerCase()}`, JSON.stringify(infoRegistrada));
+      } catch (err) {
+        console.error(err);
       }
 
-      // 3. ENVIAR A WHATSAPP
+      // 3. ARMAR EL TEXTO PARA WHATSAPP
+      let textoWa = '';
+      if (opcion === 'si') {
+        textoWa = `Buen día, Confirmo mi asistencia a los XV años.\n\n- Nombre: *${nomLimpio}*\n- Pases a utilizar: *${cantidadFinal} de ${invitado.pases} asignados*`;
+      } else {
+        textoWa = `Buen día, Soy *${nomLimpio}*. Lamentablemente no podré asistir a los XV años, pero les agradezco mucho la invitación y les deseo lo mejor.`;
+      }
+
+      // 4. ENVIAR A WHATSAPP
       const urlWa = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(textoWa)}`;
       window.open(urlWa, '_blank');
 
@@ -137,14 +204,16 @@ export default function Rsvp({ invitado = { nombre: 'Invitado Especial', pases: 
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <h2 className="font-serif text-rosa-principal text-3xl sm:text-4xl md:text-5xl mb-2.5 leading-tight">
-            Confirma tu Asistencia
+            {respuestaPrevia ? 'Tu Asistencia' : 'Confirma tu Asistencia'}
           </h2>
           <p className="text-xs sm:text-sm text-texto-suave leading-relaxed font-light">
-            Será un honor y una gran alegría compartir este momento tan especial contigo.
+            {respuestaPrevia 
+              ? 'Agradecemos de corazón tu respuesta previa para este gran día.'
+              : 'Será un honor y una gran alegría compartir este momento tan especial contigo.'}
           </p>
         </motion.div>
 
-        {/* 3. SECCIÓN INFERIOR: Botones */}
+        {/* 3. SECCIÓN INFERIOR: Botones o Estado Confirmado */}
         <motion.div 
           className="flex-1 flex flex-col justify-center items-center w-full max-w-xs sm:max-w-sm gap-3.5 z-10"
           initial={{ opacity: 0, y: 20 }}
@@ -152,21 +221,64 @@ export default function Rsvp({ invitado = { nombre: 'Invitado Especial', pases: 
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <button 
-            onClick={() => setOpcion('si')}
-            className="w-full bg-rosa-principal hover:bg-rosa-oscuro text-white font-medium py-4 px-6 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 shadow-lg shadow-rosa-principal/25 hover:shadow-xl active:scale-98 text-base border border-dorado-claro/60"
-          >
-            <Check size={20} className="text-dorado-claro shrink-0" />
-            <span className="font-medium tracking-wide">¡Sí, ahí estaré!</span>
-          </button>
-          
-          <button 
-            onClick={() => setOpcion('no')}
-            className="w-full bg-white/90 hover:bg-white text-texto-principal border-2 border-dorado-claro/90 font-medium py-4 px-6 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 shadow-sm active:scale-98 text-base"
-          >
-            <X size={20} className="text-red-400 shrink-0" />
-            <span className="font-medium tracking-wide">No podré asistir</span>
-          </button>
+          {respuestaPrevia ? (
+            <div className="w-full bg-white/95 backdrop-blur-md p-5 rounded-3xl border border-dorado-claro shadow-xl text-center flex flex-col items-center gap-2">
+              {respuestaPrevia.estado === 'confirmado' ? (
+                <>
+                  <div className="w-12 h-12 rounded-full bg-dorado-fondo border border-dorado-claro flex items-center justify-center text-dorado-principal shadow-sm">
+                    <Check size={26} strokeWidth={2.5} />
+                  </div>
+                  <span className="text-[10px] text-dorado-oscuro font-semibold uppercase tracking-widest">
+                    ✦ Asistencia Registrada ✦
+                  </span>
+                  <h3 className="font-serif text-xl sm:text-2xl text-rosa-principal font-bold leading-tight">
+                    ¡Gracias por Confirmar!
+                  </h3>
+                  <div className="bg-rosa-fondo/70 py-2 px-4 rounded-xl border border-dorado-claro/50 w-full mt-1">
+                    <p className="text-xs text-texto-suave">
+                      Lugares confirmados: <strong className="text-texto-principal text-sm">{respuestaPrevia.pases_confirmados} {respuestaPrevia.pases_confirmados === 1 ? 'pase' : 'pases'}</strong>
+                    </p>
+                  </div>
+                  <p className="text-xs text-texto-suave font-light mt-1 italic">
+                    ¡Te esperamos con mucha ilusión para celebrar juntos! 💕
+                  </p>
+                </>
+              ) : (
+                <>
+                  <div className="w-12 h-12 rounded-full bg-rosa-fondo border border-rosa-claro/80 flex items-center justify-center text-rosa-principal shadow-sm">
+                    <X size={26} strokeWidth={2.5} />
+                  </div>
+                  <span className="text-[10px] text-rosa-oscuro font-semibold uppercase tracking-widest">
+                    ✦ Respuesta Registrada ✦
+                  </span>
+                  <h3 className="font-serif text-xl sm:text-2xl text-rosa-principal font-bold leading-tight">
+                    Respuesta Recibida
+                  </h3>
+                  <p className="text-xs text-texto-suave font-light leading-relaxed px-1">
+                    Registraste que no podrás asistir. Agradecemos mucho tu aviso y tus buenos deseos. 💕
+                  </p>
+                </>
+              )}
+            </div>
+          ) : (
+            <>
+              <button 
+                onClick={() => setOpcion('si')}
+                className="w-full bg-rosa-principal hover:bg-rosa-oscuro text-white font-medium py-4 px-6 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 shadow-lg shadow-rosa-principal/25 hover:shadow-xl active:scale-98 text-base border border-dorado-claro/60 cursor-pointer"
+              >
+                <Check size={20} className="text-dorado-claro shrink-0" />
+                <span className="font-medium tracking-wide">¡Sí, ahí estaré!</span>
+              </button>
+              
+              <button 
+                onClick={() => setOpcion('no')}
+                className="w-full bg-white/90 hover:bg-white text-texto-principal border-2 border-dorado-claro/90 font-medium py-4 px-6 rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 shadow-sm active:scale-98 text-base cursor-pointer"
+              >
+                <X size={20} className="text-red-400 shrink-0" />
+                <span className="font-medium tracking-wide">No podré asistir</span>
+              </button>
+            </>
+          )}
         </motion.div>
 
       </section>
