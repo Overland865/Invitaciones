@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 export default function Galeria() {
   const BASE = import.meta.env.BASE_URL;
@@ -14,6 +14,14 @@ export default function Galeria() {
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Precarga de imágenes en caché para evitar tarjetas en blanco
+  useEffect(() => {
+    fotos.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, [fotos]);
 
   const next = () => setCurrentIndex((prev) => (prev + 1) % fotos.length);
   const prev = () => setCurrentIndex((prev) => (prev - 1 + fotos.length) % fotos.length);
@@ -127,6 +135,8 @@ export default function Galeria() {
               <img
                 src={foto}
                 alt={`Momento ${index + 1}`}
+                loading="eager"
+                decoding="async"
                 className="w-full h-full object-cover rounded-2xl pointer-events-none"
               />
             </motion.div>

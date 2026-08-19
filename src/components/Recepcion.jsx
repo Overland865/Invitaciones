@@ -13,10 +13,16 @@ export default function Recepcion() {
 
   const [index, setIndex] = useState(0);
 
+  // Precargar las fotos del local para evitar parpadeos
   useEffect(() => {
+    fotos.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+
     const timer = setInterval(() => {
       setIndex((prev) => (prev + 1) % fotos.length);
-    }, 3000);
+    }, 3500);
     return () => clearInterval(timer);
   }, [fotos.length]);
 
@@ -36,26 +42,28 @@ export default function Recepcion() {
         </motion.h2>
       </div>
 
-      {/* Carrusel de Fotos */}
+      {/* Carrusel de Fotos con Transición Crossfade Continua (sin huecos vacíos) */}
       <motion.div
-        className="w-full max-w-sm sm:max-w-md h-[18rem] sm:h-[20rem] md:h-[22rem] relative rounded-3xl overflow-hidden shadow-xl shrink-0"
+        className="w-full max-w-sm sm:max-w-md h-[18rem] sm:h-[20rem] md:h-[22rem] relative rounded-3xl overflow-hidden shadow-xl shrink-0 bg-white border border-dorado-claro/40"
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, delay: 0.2 }}
       >
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={index}
-            src={fotos[index]}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.8 }}
-            className="absolute inset-0 w-full h-full object-cover"
-            alt="Local"
+        {fotos.map((src, i) => (
+          <img
+            key={src}
+            src={src}
+            alt={`Local ${i + 1}`}
+            loading="eager"
+            decoding="async"
+            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out select-none pointer-events-none"
+            style={{
+              opacity: i === index ? 1 : 0,
+              zIndex: i === index ? 2 : 1,
+            }}
           />
-        </AnimatePresence>
+        ))}
       </motion.div>
 
       {/* Área Inferior: Información y Botón centrados */}

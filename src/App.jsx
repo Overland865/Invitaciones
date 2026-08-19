@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Hero from './components/Hero';
 import Revelacion from './components/Revelacion';
@@ -11,6 +11,19 @@ import Recepcion from './components/Recepcion';
 import Galeria from './components/Galeria';
 import Rsvp from './components/Rsvp';
 import AdminPanel from './components/AdminPanel';
+
+// Lista de todas las imágenes para precarga inmediata en memoria
+const TODAS_LAS_FOTOS = [
+  'galeria/foto1_zapatillas.jpg',
+  'galeria/foto2_vestido.jpg',
+  'galeria/foto3_pastel.jpg',
+  'galeria/foto4_vals.jpg',
+  'galeria/foto5_retrato.jpg',
+  'fotos_ceremonia/foto-1-iglesia.jpeg',
+  'fotos_ceremonia/foto-2-iglesia.jpeg',
+  'fotos_local/foto-1-local.jpeg',
+  'fotos_local/foto-2-local.jpeg'
+];
 
 function obtenerParametrosURL() {
   const url = window.location.href;
@@ -47,6 +60,15 @@ function obtenerParametrosURL() {
 function App() {
   const [ingresado, setIngresado] = useState(false);
   const [config] = useState(() => obtenerParametrosURL());
+
+  // Precargar todas las imágenes en segundo plano desde el primer instante
+  useEffect(() => {
+    const base = import.meta.env.BASE_URL;
+    TODAS_LAS_FOTOS.forEach((rutaRelativa) => {
+      const img = new Image();
+      img.src = `${base}${rutaRelativa}`;
+    });
+  }, []);
 
   // Vista Principal por defecto: Panel de Administrador
   if (!config.esInvitado) {
