@@ -17,20 +17,30 @@ function obtenerParametrosURL() {
   const searchIndex = url.indexOf('?');
   
   if (searchIndex === -1) {
-    return { esAdmin: false, nombre: 'Invitado Especial', pases: 2 };
+    // Sin parámetros en la URL -> Vista principal: Panel de Administración
+    return { esInvitado: false, nombre: '', pases: 2 };
   }
 
   const queryString = url.slice(searchIndex);
   const params = new URLSearchParams(queryString);
 
-  const esAdmin = params.get('admin') === 'true';
-  const nombreRaw = params.get('invitado');
+  const invitadoParam = params.get('invitado');
   const pasesRaw = params.get('pases');
 
+  // Si tiene parámetro 'invitado' válido, muestra la invitación
+  if (invitadoParam && invitadoParam.trim() !== '') {
+    return {
+      esInvitado: true,
+      nombre: decodeURIComponent(invitadoParam.trim()),
+      pases: pasesRaw ? Math.max(1, parseInt(pasesRaw)) : 2
+    };
+  }
+
+  // Si no hay parámetro de invitado (o está vacío), muestra el Panel de Administración
   return {
-    esAdmin,
-    nombre: nombreRaw ? decodeURIComponent(nombreRaw) : 'Invitado Especial',
-    pases: pasesRaw ? Math.max(1, parseInt(pasesRaw)) : 2
+    esInvitado: false,
+    nombre: '',
+    pases: 2
   };
 }
 
@@ -38,12 +48,12 @@ function App() {
   const [ingresado, setIngresado] = useState(false);
   const [config] = useState(() => obtenerParametrosURL());
 
-  // Si entra el organizador
-  if (config.esAdmin) {
+  // Vista Principal por defecto: Panel de Administrador
+  if (!config.esInvitado) {
     return <AdminPanel />;
   }
 
-  // Si entra el invitado
+  // Vista de la Invitación (cuando un invitado abre su enlace personalizado)
   return (
     <main className="relative bg-rosa-fondo min-h-screen w-full">
       <AnimatePresence>

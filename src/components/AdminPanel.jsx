@@ -32,9 +32,10 @@ export default function AdminPanel() {
     cargarInvitados();
   }, []);
 
-  // Construir link personalizado
+  // Construir link personalizado basado en la URL actual de la página
   const generarLink = (nom, pas) => {
-    return `${baseUrl}/?invitado=${encodeURIComponent(nom.trim())}&pases=${pas}`;
+    const baseUrl = window.location.href.split('?')[0];
+    return `${baseUrl}?invitado=${encodeURIComponent(nom.trim())}&pases=${pas}`;
   };
 
   // Crear, guardar en base de datos y copiar enlace automáticamente
