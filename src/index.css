@@ -1,16 +1,32 @@
 @import "tailwindcss";
 
-/* Configuración de Tailwind v4 */
+/* Configuración de Tailwind v4: Paleta Palo de Rosa & Dorado */
 @theme {
-  --color-lila-fondo: #FDF9FF;
-  --color-lila-principal: #8E44AD;
-  --color-lila-claro: #D7BDE2;
-  --color-lila-texto: #2C3E50;
+  --color-lila-fondo: #FAF5F4;
+  --color-rosa-fondo: #FAF5F4;
+
+  --color-lila-principal: #C47B89;
+  --color-rosa-principal: #C47B89;
+  --color-rosa-oscuro: #9E5363;
+  --color-lila-claro: #E8C1C8;
+  --color-rosa-claro: #E8C1C8;
+  --color-rosa-suave: #FDF0F2;
+
+  --color-dorado-principal: #C5A059;
+  --color-dorado-brillante: #D4AF37;
+  --color-dorado-oscuro: #9C7733;
+  --color-dorado-claro: #EEDBB4;
+  --color-dorado-fondo: #FCF9F2;
+
+  --color-lila-texto: #3D2C31;
+  --color-texto-principal: #3D2C31;
+  --color-texto-suave: #7A6268;
 
   --font-sans: "Poppins", sans-serif;
   --font-serif: "Playfair Display", serif;
 
-  --drop-shadow-brillo: 0 10px 25px rgba(142, 68, 173, 0.4);
+  --drop-shadow-brillo: 0 10px 25px rgba(197, 160, 89, 0.45);
+  --drop-shadow-rosa: 0 10px 25px rgba(196, 123, 137, 0.35);
 }
 
 /* Reglas base y Scroll Snap */
@@ -18,6 +34,9 @@
   html {
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
+    touch-action: pan-y;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
   
   body {
@@ -27,5 +46,6 @@
     margin: 0;
     padding: 0;
     text-align: center;
+    touch-action: pan-y;
   }
 }

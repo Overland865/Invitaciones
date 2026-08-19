@@ -70,7 +70,7 @@ export default function Revelacion() {
         viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 1.2, delay: 0.2 }}
       >
-        Yoselin
+        Yoselin García López
       </motion.h2>
 
     </section>

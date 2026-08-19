@@ -21,56 +21,70 @@ export default function Recepcion() {
   }, [fotos.length]);
 
   return (
-    <section className="h-screen w-screen flex flex-col justify-center items-center snap-start p-5 bg-white relative">
+    <section className="h-screen w-screen flex flex-col items-center snap-start px-5 py-4 bg-white relative overflow-hidden text-center">
       
-      <motion.h2
-        className="text-4xl md:text-5xl font-serif text-lila-principal mb-8 text-center"
-        initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 1 }}
-      >
-        La Recepción
-      </motion.h2>
+      {/* Área Superior: El título queda perfectamente centrado entre el borde superior y la imagen */}
+      <div className="flex-1 flex items-center justify-center w-full min-h-[70px]">
+        <motion.h2
+          className="text-4xl md:text-5xl font-serif text-rosa-principal text-center"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1 }}
+        >
+          La Recepción
+        </motion.h2>
+      </div>
 
-      <motion.div 
-        className="bg-white rounded-3xl shadow-xl overflow-hidden w-full max-w-sm border border-lila-claro/30"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
+      {/* Carrusel de Fotos */}
+      <motion.div
+        className="w-full max-w-sm sm:max-w-md h-[18rem] sm:h-[20rem] md:h-[22rem] relative rounded-3xl overflow-hidden shadow-xl shrink-0"
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 1, delay: 0.3 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
       >
-        <div className="w-full h-56 relative bg-gray-100">
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={index}
-              src={fotos[index]}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.8 }}
-              className="absolute inset-0 w-full h-full object-cover"
-              alt="Local"
-            />
-          </AnimatePresence>
-        </div>
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={index}
+            src={fotos[index]}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8 }}
+            className="absolute inset-0 w-full h-full object-cover"
+            alt="Local"
+          />
+        </AnimatePresence>
+      </motion.div>
 
-        <div className="p-6 flex flex-col items-center text-center">
-          <h3 className="text-2xl font-serif text-lila-texto mb-2">Local Castulo</h3>
-          <p className="text-lila-principal font-semibold text-lg mb-6">7:30 PM</p>
+      {/* Área Inferior: Información y Botón centrados */}
+      <div className="flex-1 flex flex-col items-center justify-center w-full max-w-sm py-2">
+        <motion.div
+          className="w-full flex flex-col items-center gap-1"
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          <h3 className="text-2xl md:text-3xl font-serif text-texto-principal">
+            Local Castulo
+          </h3>
+          <p className="text-dorado-principal font-bold text-xl tracking-wider">
+            8:00 PM
+          </p>
           
           <a 
-            // poner link del maps del local 
             href="https://maps.app.goo.gl/LyULR4P38L129Sde9" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="w-full bg-lila-principal hover:bg-lila-texto text-white py-3 rounded-full flex items-center justify-center gap-2 transition-colors duration-300 shadow-md"
+            className="w-full max-w-xs bg-rosa-principal hover:bg-rosa-oscuro text-white font-medium py-3 px-6 rounded-full flex items-center justify-center gap-2 transition-all duration-300 shadow-md hover:shadow-lg active:scale-98 mt-1"
           >
-            <MapPin size={20} />
+            <MapPin size={20} className="text-dorado-claro" />
             Ver en el mapa
           </a>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
 
     </section>
   );

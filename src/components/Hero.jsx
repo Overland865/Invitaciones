@@ -6,7 +6,7 @@ export default function Hero({ onEntrar }) {
     <section className="h-screen w-screen flex flex-col justify-center items-center relative overflow-hidden p-5">
       
       <motion.h1 
-        className="text-5xl md:text-6xl font-serif text-lila-principal font-semibold mb-6"
+        className="text-5xl md:text-6xl font-serif text-rosa-principal font-semibold mb-6 tracking-wide"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
@@ -23,8 +23,8 @@ export default function Hero({ onEntrar }) {
         whileTap={{ scale: 0.9 }}
         onClick={onEntrar}
       >
-        {/* Placeholder del 3D */}
-        <div className="font-serif text-[8rem] font-semibold text-lila-principal drop-shadow-brillo animate-[bounce_4s_infinite]">
+        {/* Número 15 en Dorado con Brillo */}
+        <div className="font-serif text-[8rem] font-semibold text-dorado-principal drop-shadow-brillo animate-[bounce_4s_infinite]">
           15
         </div>
       </motion.div>

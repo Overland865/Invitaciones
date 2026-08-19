@@ -6,7 +6,7 @@ export default function Recordatorio() {
     <section className="h-screen w-screen flex flex-col justify-center items-center snap-start p-5 bg-white relative">
       
       <motion.h2
-        className="text-4xl md:text-5xl font-serif text-lila-principal mb-10 text-center"
+        className="text-4xl md:text-5xl font-serif text-rosa-principal mb-10 text-center tracking-wide"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}

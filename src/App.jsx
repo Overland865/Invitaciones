@@ -15,19 +15,19 @@ function App() {
   const [ingresado, setIngresado] = useState(false);
 
   return (
-    <main className="relative bg-lila-fondo">
+    <main className="relative bg-rosa-fondo min-h-screen w-full">
       <AnimatePresence>
         {!ingresado ? (
           <motion.div
             key="portada"
             exit={{ opacity: 0, y: -100 }}
             transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="absolute inset-0 z-50 bg-lila-fondo"
+            className="fixed inset-0 z-50 bg-rosa-fondo overflow-y-auto"
           >
             <Hero onEntrar={() => setIngresado(true)} />
           </motion.div>
         ) : (
-            <motion.div
+          <motion.div
             key="contenido"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

@@ -48,9 +48,9 @@ export default function Contador() {
 // Sub-componente para las cajitas blancas de los números
 function Caja({ valor, etiqueta }) {
   return (
-    <div className="bg-white p-3 rounded-xl shadow-md min-w-[65px] flex flex-col items-center">
-      <span className="text-2xl font-semibold text-lila-principal">{valor}</span>
-      <span className="text-[0.65rem] text-slate-500 uppercase tracking-wider mt-1">{etiqueta}</span>
+    <div className="bg-white/90 backdrop-blur-xs p-3 rounded-2xl shadow-md border border-dorado-claro/70 min-w-[68px] flex flex-col items-center">
+      <span className="text-2xl font-serif font-bold text-rosa-principal">{valor}</span>
+      <span className="text-[0.65rem] text-texto-suave uppercase tracking-widest mt-1">{etiqueta}</span>
     </div>
   );
 }
