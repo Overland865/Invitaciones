@@ -1,6 +1,16 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
+// Partículas para la galería (Estilo 8)
+const particulasGaleria = Array.from({ length: 10 }, (_, i) => ({
+  id: i,
+  size: Math.random() * 5 + 3,
+  x: Math.random() * 90 + 5,
+  y: Math.random() * 85 + 10,
+  duration: Math.random() * 4 + 4,
+  delay: Math.random() * 3,
+}));
+
 export default function Galeria() {
   const BASE = import.meta.env.BASE_URL;
 
@@ -83,13 +93,74 @@ export default function Galeria() {
   return (
     <section className="h-screen w-screen flex flex-col items-center snap-start bg-rosa-fondo relative overflow-hidden text-center px-4 py-4 select-none">
 
-      {/* Título Superior más elevado y centrado */}
-      <div className="flex-1 flex items-center justify-center w-full min-h-[60px]">
+      {/* FONDO ANIMADO ESTILO 8: Prisma de Luz y Partículas Flotantes (Vívido) */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Halo Prismático detrás del carrusel */}
+        <motion.div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 sm:w-[32rem] h-80 sm:h-[32rem] rounded-full bg-gradient-to-tr from-dorado-principal/35 via-rosa-principal/30 to-dorado-claro/40 blur-2xl"
+          animate={{ rotate: [0, 360], scale: [0.95, 1.15, 0.95] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+        />
+
+        {/* Destellos parpadeantes */}
+        {[
+          { top: '15%', left: '8%', size: 'text-xl', delay: 0 },
+          { top: '18%', right: '10%', size: 'text-lg', delay: 1.2 },
+          { bottom: '25%', left: '10%', size: 'text-lg', delay: 2 },
+          { bottom: '20%', right: '8%', size: 'text-xl', delay: 0.7 },
+        ].map((s, i) => (
+          <motion.span
+            key={i}
+            className={`absolute text-dorado-principal drop-shadow-[0_0_8px_rgba(197,160,89,0.9)] ${s.size}`}
+            style={{ top: s.top, bottom: s.bottom, left: s.left, right: s.right }}
+            animate={{
+              opacity: [0.25, 0.95, 0.25],
+              scale: [0.7, 1.3, 0.7],
+              rotate: [0, 90, 0],
+            }}
+            transition={{
+              duration: 3.8,
+              delay: s.delay,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            ✦
+          </motion.span>
+        ))}
+
+        {particulasGaleria.map((p) => (
+          <motion.div
+            key={p.id}
+            className="absolute rounded-full bg-dorado-principal/70 shadow-[0_0_6px_rgba(197,160,89,0.8)]"
+            style={{
+              width: p.size + 2,
+              height: p.size + 2,
+              left: `${p.x}%`,
+              top: `${p.y}%`,
+            }}
+            animate={{
+              y: [-20, 20, -20],
+              x: [-10, 10, -10],
+              opacity: [0.3, 0.9, 0.3],
+            }}
+            transition={{
+              duration: p.duration,
+              delay: p.delay,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Título Superior */}
+      <div className="flex-1 flex items-center justify-center w-full min-h-[60px] z-10">
         <motion.h2
           className="text-4xl md:text-5xl font-serif text-rosa-principal text-center"
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false, amount: 0.2 }}
           transition={{ duration: 1 }}
         >
           Mis Momentos
@@ -98,7 +169,7 @@ export default function Galeria() {
 
       {/* Escenario 3D para el Carrusel Circular Infinito */}
       <motion.div
-        className="relative w-full max-w-sm sm:max-w-md md:max-w-lg h-[23rem] sm:h-[25.5rem] md:h-[27.5rem] flex items-center justify-center cursor-grab active:cursor-grabbing shrink-0"
+        className="relative w-full max-w-sm sm:max-w-md md:max-w-lg h-[23rem] sm:h-[25.5rem] md:h-[27.5rem] flex items-center justify-center cursor-grab active:cursor-grabbing shrink-0 z-10"
         style={{ perspective: 1000 }}
         drag="x"
         dragConstraints={{ left: 0, right: 0 }}
@@ -145,7 +216,7 @@ export default function Galeria() {
       </motion.div>
 
       {/* Contenedor Inferior: Puntos y texto de guía */}
-      <div className="flex-1 flex flex-col justify-center items-center py-2">
+      <div className="flex-1 flex flex-col justify-center items-center py-2 z-10">
         {/* Puntos Indicadores de Navegación Circular */}
         <div className="flex justify-center items-center gap-2">
           {fotos.map((_, index) => (
@@ -167,8 +238,8 @@ export default function Galeria() {
           className="text-xs text-dorado-oscuro font-medium uppercase tracking-widest mt-2.5 flex items-center gap-2"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.5 }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 1, delay: 0.3 }}
         >
           <span className="animate-pulse text-dorado-principal">←</span>
           Desliza
