@@ -1,48 +1,59 @@
 import { motion } from 'framer-motion';
 
-// Pétalos de rosa flotantes para la sección Familia (Estilo 4 - Realzado)
-const petalos = Array.from({ length: 18 }, (_, i) => ({
-  id: i,
-  size: Math.random() * 16 + 14,
-  left: `${Math.random() * 92 + 4}%`,
-  topInit: `${Math.random() * 85}%`,
-  duration: Math.random() * 5 + 5,
-  delay: Math.random() * 3,
-}));
+// Coordenadas de estrellas fijas para el fondo de destellos
+const destellosFamilia = [
+  { top: '12%', left: '12%', size: 'text-lg', delay: 0 },
+  { top: '22%', right: '14%', size: 'text-sm', delay: 1.5 },
+  { top: '48%', left: '10%', size: 'text-base', delay: 0.8 },
+  { top: '55%', right: '10%', size: 'text-lg', delay: 2.2 },
+  { bottom: '15%', left: '14%', size: 'text-sm', delay: 1.1 },
+  { bottom: '10%', right: '16%', size: 'text-base', delay: 2.8 },
+];
 
 export default function Familia() {
   return (
     <section className="h-screen w-screen flex flex-col justify-evenly items-center snap-start px-6 py-8 sm:py-12 md:py-16 bg-rosa-fondo text-center select-none relative overflow-hidden">
       
-      {/* FONDO ANIMADO ESTILO 4: Pétalos de Rosa Flotantes (Visibles y Vívidos) */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Resplandor dorado de fondo */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-dorado-principal/20 blur-3xl" />
+      {/* FONDO ANIMADO: Halo Dorado Suave & Destellos ✦ */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center">
+        {/* Resplandor central suave */}
+        <motion.div
+          className="absolute w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-[radial-gradient(circle,rgba(197,160,89,0.25)_0%,transparent_70%)] pointer-events-none"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.35, 0.75, 0.35],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
 
-        {petalos.map((pet) => (
-          <motion.div
-            key={pet.id}
-            className="absolute bg-gradient-to-br from-rosa-principal/80 via-rosa-oscuro/70 to-dorado-principal/50 rounded-[75%_10%_75%_10%] border border-white/40 shadow-[0_4px_10px_rgba(196,123,137,0.35)]"
+        {destellosFamilia.map((d, i) => (
+          <motion.span
+            key={i}
+            className={`absolute text-dorado-principal ${d.size}`}
             style={{
-              width: pet.size,
-              height: pet.size * 1.35,
-              left: pet.left,
-              top: pet.topInit,
+              top: d.top,
+              bottom: d.bottom,
+              left: d.left,
+              right: d.right,
             }}
             animate={{
-              y: [-20, 80, -20],
-              x: [-20, 25, -20],
-              rotate: [0, 60, 130, 0],
-              opacity: [0.4, 0.95, 0.4],
-              scale: [0.85, 1.15, 0.85],
+              opacity: [0.2, 0.95, 0.2],
+              scale: [0.75, 1.3, 0.75],
+              rotate: [0, 90, 0],
             }}
             transition={{
-              duration: pet.duration,
-              delay: pet.delay,
+              duration: 3.5 + (i % 2),
+              delay: d.delay,
               repeat: Infinity,
               ease: "easeInOut",
             }}
-          />
+          >
+            ✦
+          </motion.span>
         ))}
       </div>
 
@@ -94,7 +105,7 @@ export default function Familia() {
             transition={{ duration: 0.7, delay: 0.45 }}
             className="text-2xl sm:text-3xl md:text-4xl font-serif text-rosa-principal leading-relaxed text-center w-full"
           >
-            Gicelly del Carmen Paredes López
+            Gicelly del Carmen Paredes Lópe
           </motion.h3>
         </div>
       </motion.div>

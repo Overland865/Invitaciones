@@ -1,62 +1,53 @@
 import { motion } from 'framer-motion';
 
+// Coordenadas de estrellas fijas para el fondo de destellos
+const destellosMensaje = [
+  { top: '15%', left: '12%', size: 'text-xl', delay: 0 },
+  { top: '25%', right: '15%', size: 'text-sm', delay: 1.5 },
+  { top: '45%', left: '8%', size: 'text-base', delay: 0.8 },
+  { top: '65%', right: '12%', size: 'text-lg', delay: 2.2 },
+  { bottom: '15%', left: '16%', size: 'text-sm', delay: 1.1 },
+  { bottom: '10%', right: '18%', size: 'text-base', delay: 2.8 },
+];
+
 export default function Mensaje() {
   return (
     <section className="h-screen w-screen flex flex-col justify-evenly items-center snap-start px-6 sm:px-10 md:px-16 py-10 sm:py-14 md:py-18 bg-rosa-fondo relative overflow-hidden select-none text-center">
       
-      {/* FONDO ANIMADO ESTILO 2: Orbes de Luz Aurora Vívidos + Destellos */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Orbe 1: Tono Dorado Intenso Flotante */}
+      {/* FONDO ANIMADO: Halo Dorado Suave & Destellos ✦ */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center">
+        {/* Resplandor central suave */}
         <motion.div
-          className="absolute w-80 sm:w-[28rem] h-80 sm:h-[28rem] rounded-full bg-gradient-to-tr from-dorado-principal/35 via-dorado-claro/40 to-transparent blur-2xl"
+          className="absolute w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-[radial-gradient(circle,rgba(197,160,89,0.25)_0%,transparent_70%)] pointer-events-none"
           animate={{
-            x: ['-25%', '35%', '-25%'],
-            y: ['-15%', '30%', '-15%'],
-            scale: [1, 1.35, 1],
+            scale: [1, 1.2, 1],
+            opacity: [0.35, 0.75, 0.35],
           }}
           transition={{
-            duration: 10,
+            duration: 6,
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          style={{ top: '10%', left: '10%' }}
         />
 
-        {/* Orbe 2: Tono Palo de Rosa Intenso Flotante */}
-        <motion.div
-          className="absolute w-96 sm:w-[32rem] h-96 sm:h-[32rem] rounded-full bg-gradient-to-br from-rosa-principal/40 via-rosa-oscuro/30 to-transparent blur-2xl"
-          animate={{
-            x: ['35%', '-25%', '35%'],
-            y: ['25%', '-20%', '25%'],
-            scale: [1.3, 0.9, 1.3],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          style={{ bottom: '5%', right: '10%' }}
-        />
-
-        {/* Chispas flotantes luminosas */}
-        {[
-          { top: '18%', left: '12%', size: 'text-2xl', delay: 0 },
-          { top: '28%', right: '16%', size: 'text-lg', delay: 1 },
-          { bottom: '22%', left: '18%', size: 'text-xl', delay: 2 },
-          { bottom: '15%', right: '14%', size: 'text-2xl', delay: 0.5 },
-        ].map((s, i) => (
+        {destellosMensaje.map((d, i) => (
           <motion.span
             key={i}
-            className={`absolute text-dorado-principal drop-shadow-[0_0_8px_rgba(197,160,89,0.8)] ${s.size}`}
-            style={{ top: s.top, bottom: s.bottom, left: s.left, right: s.right }}
+            className={`absolute text-dorado-principal ${d.size}`}
+            style={{
+              top: d.top,
+              bottom: d.bottom,
+              left: d.left,
+              right: d.right,
+            }}
             animate={{
-              opacity: [0.3, 1, 0.3],
-              scale: [0.7, 1.4, 0.7],
+              opacity: [0.2, 0.95, 0.2],
+              scale: [0.75, 1.3, 0.75],
               rotate: [0, 90, 0],
             }}
             transition={{
-              duration: 4,
-              delay: s.delay,
+              duration: 3.5 + (i % 2),
+              delay: d.delay,
               repeat: Infinity,
               ease: "easeInOut",
             }}

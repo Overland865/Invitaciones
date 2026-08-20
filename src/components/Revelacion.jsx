@@ -63,15 +63,20 @@ export default function Revelacion() {
       <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none"></div>
 
       {/* Nombre flotante sobre la imagen */}
-      <motion.h2
-        className="text-7xl md:text-8xl font-serif text-white font-semibold z-20 drop-shadow-2xl"
+      <motion.div
+        className="z-20 text-center px-4"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 1.2, delay: 0.2 }}
       >
-        Yoselin García López
-      </motion.h2>
+        <span className="font-serif text-sm sm:text-base text-dorado-claro/90 uppercase tracking-[0.4em] font-light block mb-1 drop-shadow-md">
+          Quinceañera
+        </span>
+        <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif text-white font-semibold drop-shadow-[0_10px_25px_rgba(0,0,0,0.85)] tracking-wide">
+          Yoselin García Lópe
+        </h2>
+      </motion.div>
 
     </section>
   );

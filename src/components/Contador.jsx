@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 export default function Contador() {
   const [tiempo, setTiempo] = useState({
@@ -6,8 +7,8 @@ export default function Contador() {
   });
 
   useEffect(() => {
-    // ⚠️ Cambia esta fecha por la fecha real de los XV años
-    const fechaEvento = new Date("Oct 3, 2026 21:00:00").getTime();
+    // Fecha del evento: 03 de Octubre de 2026, 18:00 hrs
+    const fechaEvento = new Date("Oct 3, 2026 18:00:00").getTime();
 
     const intervalo = setInterval(() => {
       const ahora = new Date().getTime();
@@ -23,7 +24,6 @@ export default function Contador() {
       const m = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
       const s = Math.floor((distancia % (1000 * 60)) / 1000);
 
-      // Formatear a 2 dígitos
       setTiempo({
         dias: String(d).padStart(2, '0'),
         horas: String(h).padStart(2, '0'),
@@ -36,21 +36,30 @@ export default function Contador() {
   }, []);
 
   return (
-    <div className="flex gap-3 mt-2">
+    <div className="flex items-center justify-center gap-2 sm:gap-3.5">
       <Caja valor={tiempo.dias} etiqueta="Días" />
-      <Caja valor={tiempo.horas} etiqueta="Hrs" />
+      <span className="text-dorado-principal text-lg sm:text-xl font-serif -mt-4 opacity-70">✦</span>
+      <Caja valor={tiempo.horas} etiqueta="Horas" />
+      <span className="text-dorado-principal text-lg sm:text-xl font-serif -mt-4 opacity-70">✦</span>
       <Caja valor={tiempo.minutos} etiqueta="Min" />
-      <Caja valor={tiempo.segundos} etiqueta="Seg" />
+      <span className="text-dorado-principal text-lg sm:text-xl font-serif -mt-4 opacity-70">✦</span>
+      <Caja valor={tiempo.segundos} etiqueta="Seg" esSegundo />
     </div>
   );
 }
 
-// Sub-componente para las cajitas blancas de los números
-function Caja({ valor, etiqueta }) {
+function Caja({ valor, etiqueta, esSegundo = false }) {
   return (
-    <div className="bg-white/90 backdrop-blur-xs p-3 rounded-2xl shadow-md border border-dorado-claro/70 min-w-[68px] flex flex-col items-center">
-      <span className="text-2xl font-serif font-bold text-rosa-principal">{valor}</span>
-      <span className="text-[0.65rem] text-texto-suave uppercase tracking-widest mt-1">{etiqueta}</span>
+    <div className="relative bg-white/90 backdrop-blur-md px-3 py-3.5 sm:px-4 sm:py-4 rounded-2xl shadow-lg border border-dorado-claro/80 min-w-[66px] sm:min-w-[74px] flex flex-col items-center justify-center transition-all duration-300">
+      {/* Resplandor superior sutil */}
+      <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-dorado-claro to-transparent rounded-t-2xl opacity-60" />
+      
+      <span className={`text-2xl sm:text-3xl font-serif font-bold text-rosa-principal leading-none ${esSegundo ? 'tabular-nums' : ''}`}>
+        {valor}
+      </span>
+      <span className="text-[10px] sm:text-[11px] text-texto-suave uppercase tracking-widest font-medium mt-1.5">
+        {etiqueta}
+      </span>
     </div>
   );
 }

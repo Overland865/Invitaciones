@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Configuración de Tailwind v4: Paleta Palo de Rosa & Dorado */
+/* Configuración de Tailwind v4: Paleta Palo de Rosa & Dorado + Tipografía de Gala */
 @theme {
   --color-lila-fondo: #FAF5F4;
   --color-rosa-fondo: #FAF5F4;
@@ -22,14 +22,17 @@
   --color-texto-principal: #3D2C31;
   --color-texto-suave: #7A6268;
 
-  --font-sans: "Poppins", sans-serif;
-  --font-serif: "Playfair Display", serif;
+  --font-sans: "Poppins", system-ui, -apple-system, sans-serif;
+  --font-serif: "Playfair Display", "Cormorant Garamond", Georgia, serif;
+  --font-display: "Cinzel", "Cinzel Decorative", "Playfair Display", serif;
+  --font-script: "Great Vibes", "Alex Brush", cursive;
+  --font-cormorant: "Cormorant Garamond", Georgia, serif;
 
-  --drop-shadow-brillo: 0 10px 25px rgba(197, 160, 89, 0.45);
-  --drop-shadow-rosa: 0 10px 25px rgba(196, 123, 137, 0.35);
+  --drop-shadow-brillo: 0 8px 20px rgba(197, 160, 89, 0.4);
+  --drop-shadow-rosa: 0 8px 20px rgba(196, 123, 137, 0.3);
 }
 
-/* Reglas base y Scroll Snap */
+/* Reglas base y Optimización de Rendimiento GPU a 60-120 FPS */
 @layer base {
   html {
     scroll-snap-type: y mandatory;
@@ -37,6 +40,7 @@
     touch-action: pan-y;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
+    overscroll-behavior-y: none;
   }
   
   body {
@@ -47,5 +51,8 @@
     padding: 0;
     text-align: center;
     touch-action: pan-y;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }

@@ -93,34 +93,33 @@ export default function Galeria() {
   return (
     <section className="h-screen w-screen flex flex-col items-center snap-start bg-rosa-fondo relative overflow-hidden text-center px-4 py-4 select-none">
 
-      {/* FONDO ANIMADO ESTILO 8: Prisma de Luz y Partículas Flotantes (Vívido) */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Halo Prismático detrás del carrusel */}
+      {/* FONDO ANIMADO: Halo Dorado Suave & Destellos ✦ */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center">
+        {/* Resplandor central suave */}
         <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 sm:w-[32rem] h-80 sm:h-[32rem] rounded-full bg-gradient-to-tr from-dorado-principal/35 via-rosa-principal/30 to-dorado-claro/40 blur-2xl"
-          animate={{ rotate: [0, 360], scale: [0.95, 1.15, 0.95] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+          className="absolute w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-[radial-gradient(circle,rgba(197,160,89,0.25)_0%,transparent_70%)] pointer-events-none"
+          animate={{ scale: [1, 1.2, 1], opacity: [0.35, 0.75, 0.35] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
         />
 
-        {/* Destellos parpadeantes */}
         {[
-          { top: '15%', left: '8%', size: 'text-xl', delay: 0 },
-          { top: '18%', right: '10%', size: 'text-lg', delay: 1.2 },
-          { bottom: '25%', left: '10%', size: 'text-lg', delay: 2 },
-          { bottom: '20%', right: '8%', size: 'text-xl', delay: 0.7 },
-        ].map((s, i) => (
+          { top: '12%', left: '8%', size: 'text-xl', delay: 0 },
+          { top: '16%', right: '10%', size: 'text-base', delay: 1.2 },
+          { bottom: '25%', left: '10%', size: 'text-base', delay: 2 },
+          { bottom: '18%', right: '8%', size: 'text-xl', delay: 0.7 },
+        ].map((d, i) => (
           <motion.span
             key={i}
-            className={`absolute text-dorado-principal drop-shadow-[0_0_8px_rgba(197,160,89,0.9)] ${s.size}`}
-            style={{ top: s.top, bottom: s.bottom, left: s.left, right: s.right }}
+            className={`absolute text-dorado-principal ${d.size}`}
+            style={{ top: d.top, bottom: d.bottom, left: d.left, right: d.right }}
             animate={{
-              opacity: [0.25, 0.95, 0.25],
-              scale: [0.7, 1.3, 0.7],
+              opacity: [0.2, 0.95, 0.2],
+              scale: [0.75, 1.3, 0.75],
               rotate: [0, 90, 0],
             }}
             transition={{
-              duration: 3.8,
-              delay: s.delay,
+              duration: 3.5 + (i % 2),
+              delay: d.delay,
               repeat: Infinity,
               ease: "easeInOut",
             }}
@@ -128,36 +127,12 @@ export default function Galeria() {
             ✦
           </motion.span>
         ))}
-
-        {particulasGaleria.map((p) => (
-          <motion.div
-            key={p.id}
-            className="absolute rounded-full bg-dorado-principal/70 shadow-[0_0_6px_rgba(197,160,89,0.8)]"
-            style={{
-              width: p.size + 2,
-              height: p.size + 2,
-              left: `${p.x}%`,
-              top: `${p.y}%`,
-            }}
-            animate={{
-              y: [-20, 20, -20],
-              x: [-10, 10, -10],
-              opacity: [0.3, 0.9, 0.3],
-            }}
-            transition={{
-              duration: p.duration,
-              delay: p.delay,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
       </div>
 
       {/* Título Superior */}
       <div className="flex-1 flex items-center justify-center w-full min-h-[60px] z-10">
         <motion.h2
-          className="text-4xl md:text-5xl font-serif text-rosa-principal text-center"
+          className="text-4xl md:text-5xl font-serif text-rosa-principal text-center tracking-wide font-semibold"
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.2 }}
