@@ -83,7 +83,7 @@ export default function Familia() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="text-2xl sm:text-3xl md:text-4xl font-serif text-rosa-principal leading-relaxed text-center w-full"
           >
-          Gicelly del Carmen Paredes Lópe
+          Juan Ariel García Magaña  
           </motion.h3>
 
           <motion.div 
@@ -105,7 +105,7 @@ export default function Familia() {
             transition={{ duration: 0.7, delay: 0.45 }}
             className="text-2xl sm:text-3xl md:text-4xl font-serif text-rosa-principal leading-relaxed text-center w-full"
           >
-          Juan Ariel García Magaña  
+          Gicelly del Carmen Paredes Lópe
           </motion.h3>
         </div>
       </motion.div>
@@ -185,9 +185,9 @@ export default function Familia() {
             className="flex flex-col sm:flex-row items-center justify-center text-center text-xl sm:text-2xl md:text-3xl font-serif text-rosa-principal leading-relaxed w-full"
           >
             {/* padrino y luego madrina */}
-            <span>Lilia Myledy Che Barrera</span>
+            <span>Joel Alberto Paredes Lope</span>
             <span className="text-lg sm:text-xl font-serif text-dorado-principal my-1 sm:my-0 sm:mx-3 leading-none">&</span>
-            <span> Joel Alberto Paredes Lope</span>
+            <span>Lilia Myledy Che Barrera</span>
           </motion.div>
 
           {/* madrina 3 */}
