@@ -74,7 +74,7 @@ export default function Revelacion() {
           Quinceañera
         </span>
         <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif text-white font-semibold drop-shadow-[0_10px_25px_rgba(0,0,0,0.85)] tracking-wide">
-          Yoselin García Lópe
+          Yoselin García Paredes
         </h2>
       </motion.div>
 

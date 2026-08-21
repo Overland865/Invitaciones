@@ -80,6 +80,17 @@ export default function Hero({ onEntrar }) {
         </div>
       </motion.div>
 
+      {/* Indicador de entrada */}
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0.6, 1, 0.6] }}
+        transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
+        className="text-xs sm:text-sm font-sans tracking-[0.25em] text-rosa-oscuro uppercase cursor-pointer mb-3 z-10 select-none"
+        onClick={onEntrar}
+      >
+        ✦ Toca para abrir ✦
+      </motion.p>
+
       {/* Contador */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}

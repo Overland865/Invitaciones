@@ -11,6 +11,7 @@ import Recepcion from './components/Recepcion';
 import Galeria from './components/Galeria';
 import Rsvp from './components/Rsvp';
 import AdminPanel from './components/AdminPanel';
+import ReproductorMusica from './components/ReproductorMusica';
 
 // Lista de todas las imágenes para precarga inmediata en memoria
 const TODAS_LAS_FOTOS = [
@@ -105,6 +106,7 @@ function App() {
             <Recepcion />
             <Galeria />
             <Rsvp invitado={{ nombre: config.nombre, pases: config.pases }} />
+            <ReproductorMusica autoPlay={true} audioSrc="musica.mp3" />
           </motion.div>
         )}
       </AnimatePresence>

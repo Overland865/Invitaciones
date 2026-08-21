@@ -83,7 +83,7 @@ export default function Familia() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="text-2xl sm:text-3xl md:text-4xl font-serif text-rosa-principal leading-relaxed text-center w-full"
           >
-            Juan Ariel García Magaña
+          Gicelly del Carmen Paredes Lópe
           </motion.h3>
 
           <motion.div 
@@ -105,7 +105,7 @@ export default function Familia() {
             transition={{ duration: 0.7, delay: 0.45 }}
             className="text-2xl sm:text-3xl md:text-4xl font-serif text-rosa-principal leading-relaxed text-center w-full"
           >
-            Gicelly del Carmen Paredes Lópe
+          Juan Ariel García Magaña  
           </motion.h3>
         </div>
       </motion.div>
@@ -170,9 +170,10 @@ export default function Familia() {
             transition={{ duration: 0.7, delay: 0.75 }}
             className="flex flex-col sm:flex-row items-center justify-center text-center text-xl sm:text-2xl md:text-3xl font-serif text-rosa-principal leading-relaxed w-full"
           >
-            <span>Maria Abigail Paredes Lope</span>
-            <span className="text-lg sm:text-xl font-serif text-dorado-principal my-1 sm:my-0 sm:mx-3 leading-none">&</span>
+            {/* padrino y luego madrina */}
             <span>José Alejandro Hernández Ortiz</span>
+            <span className="text-lg sm:text-xl font-serif text-dorado-principal my-1 sm:my-0 sm:mx-3 leading-none">&</span>
+            <span>Maria Abigail Paredes Lope</span>
           </motion.div>
 
           {/* Padrinos 2 */}
@@ -183,12 +184,13 @@ export default function Familia() {
             transition={{ duration: 0.7, delay: 0.85 }}
             className="flex flex-col sm:flex-row items-center justify-center text-center text-xl sm:text-2xl md:text-3xl font-serif text-rosa-principal leading-relaxed w-full"
           >
-            <span>Joel Alberto Paredes Lope</span>
-            <span className="text-lg sm:text-xl font-serif text-dorado-principal my-1 sm:my-0 sm:mx-3 leading-none">&</span>
+            {/* padrino y luego madrina */}
             <span>Lilia Myledy Che Barrera</span>
+            <span className="text-lg sm:text-xl font-serif text-dorado-principal my-1 sm:my-0 sm:mx-3 leading-none">&</span>
+            <span> Joel Alberto Paredes Lope</span>
           </motion.div>
 
-          {/* Padrino 3 */}
+          {/* madrina 3 */}
           <motion.p 
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
