@@ -13,12 +13,13 @@ export default function ReproductorMusica({ autoPlay = false, audioSrc = 'musica
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
   const audioRef = useRef(null);
+  const wasPlayingRef = useRef(false);
 
   const BASE = import.meta.env.BASE_URL;
   const fullAudioSrc = audioSrc.startsWith('http') ? audioSrc : `${BASE}${audioSrc.replace(/^\//, '')}`;
 
+  // Autoplay al entrar a la invitación (primer gesto de usuario)
   useEffect(() => {
-    // Si autoPlay es true y aún no ha intentado reproducir
     if (autoPlay && audioRef.current && !hasInteracted) {
       setHasInteracted(true);
       const playPromise = audioRef.current.play();
@@ -28,7 +29,6 @@ export default function ReproductorMusica({ autoPlay = false, audioSrc = 'musica
             setIsPlaying(true);
           })
           .catch((err) => {
-            // El navegador pudo haber bloqueado si no hubo suficiente interacción previa
             console.warn('Autoplay bloqueado por políticas del navegador:', err);
             setIsPlaying(false);
           });
@@ -36,16 +36,64 @@ export default function ReproductorMusica({ autoPlay = false, audioSrc = 'musica
     }
   }, [autoPlay, hasInteracted]);
 
+  // Pausar automáticamente al salir de la pestaña, cambiar de app o minimizar la pantalla
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!audioRef.current) return;
+
+      if (document.hidden) {
+        // Pestaña oculta / pantalla bloqueada / minimizado
+        if (!audioRef.current.paused) {
+          wasPlayingRef.current = true;
+          audioRef.current.pause();
+          setIsPlaying(false);
+        }
+      } else {
+        // Al regresar a la pestaña, reanudar solo si estaba sonando antes
+        if (wasPlayingRef.current) {
+          audioRef.current
+            .play()
+            .then(() => setIsPlaying(true))
+            .catch(() => setIsPlaying(false));
+        }
+      }
+    };
+
+    const handlePageExit = () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('pagehide', handlePageExit);
+    window.addEventListener('beforeunload', handlePageExit);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('pagehide', handlePageExit);
+      window.removeEventListener('beforeunload', handlePageExit);
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+    };
+  }, []);
+
   const togglePlay = () => {
     if (!audioRef.current) return;
 
     if (isPlaying) {
       audioRef.current.pause();
       setIsPlaying(false);
+      wasPlayingRef.current = false;
     } else {
       audioRef.current
         .play()
-        .then(() => setIsPlaying(true))
+        .then(() => {
+          setIsPlaying(true);
+          wasPlayingRef.current = true;
+        })
         .catch((err) => console.error('Error al reproducir audio:', err));
     }
   };
