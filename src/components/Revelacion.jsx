@@ -4,13 +4,13 @@ import { motion } from 'framer-motion';
 export default function Revelacion() {
   const BASE = import.meta.env.BASE_URL;
 
-  // Fotografías oficiales temáticas de XV Años (guardadas en public/galeria/)
+  // Fotografías de la sección de revelación (guardadas en public/fotos_principal/)
   const fotos = [
-    `${BASE}galeria/foto2_vestido.jpg`,
-    `${BASE}galeria/foto5_retrato.jpg`,
-    `${BASE}galeria/foto4_vals.jpg`,
-    `${BASE}galeria/foto3_pastel.jpg`,
-    `${BASE}galeria/foto1_zapatillas.jpg`
+    `${BASE}fotos_principal/foto-1-principal.jpeg`,
+    `${BASE}fotos_principal/foto-2-principal.jpeg`,
+    `${BASE}fotos_principal/foto-3-principal.jpeg`,
+    `${BASE}fotos_principal/foto-4-principal.jpeg`,
+    `${BASE}fotos_principal/foto-5-principal.jpeg`
   ];
 
   const [current, setCurrent] = useState(0);
@@ -81,4 +81,3 @@ export default function Revelacion() {
     </section>
   );
 }
-

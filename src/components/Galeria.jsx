@@ -14,13 +14,11 @@ const particulasGaleria = Array.from({ length: 10 }, (_, i) => ({
 export default function Galeria() {
   const BASE = import.meta.env.BASE_URL;
 
-  // Fotografías oficiales temáticas de XV Años (guardadas en public/galeria/)
+  // Fotografías de la galería (guardadas en public/fotos_galeria/)
   const fotos = [
-    `${BASE}galeria/foto1_zapatillas.jpg`,
-    `${BASE}galeria/foto2_vestido.jpg`,
-    `${BASE}galeria/foto3_pastel.jpg`,
-    `${BASE}galeria/foto4_vals.jpg`,
-    `${BASE}galeria/foto5_retrato.jpg`
+    `${BASE}fotos_galeria/foto-1-galeria.jpeg`,
+    `${BASE}fotos_galeria/foto-2-galeria.jpeg`,
+    `${BASE}fotos_galeria/foto-3-galeria.jpeg`
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);

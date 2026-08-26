@@ -15,11 +15,14 @@ import ReproductorMusica from './components/ReproductorMusica';
 
 // Lista de todas las imágenes para precarga inmediata en memoria
 const TODAS_LAS_FOTOS = [
-  'galeria/foto1_zapatillas.jpg',
-  'galeria/foto2_vestido.jpg',
-  'galeria/foto3_pastel.jpg',
-  'galeria/foto4_vals.jpg',
-  'galeria/foto5_retrato.jpg',
+  'fotos_principal/foto-1-principal.jpeg',
+  'fotos_principal/foto-2-principal.jpeg',
+  'fotos_principal/foto-3-principal.jpeg',
+  'fotos_principal/foto-4-principal.jpeg',
+  'fotos_principal/foto-5-principal.jpeg',
+  'fotos_galeria/foto-1-galeria.jpeg',
+  'fotos_galeria/foto-2-galeria.jpeg',
+  'fotos_galeria/foto-3-galeria.jpeg',
   'fotos_ceremonia/foto-1-iglesia.jpeg',
   'fotos_ceremonia/foto-2-iglesia.jpeg',
   'fotos_local/foto-1-local.jpeg',
