@@ -19,6 +19,7 @@ const TODAS_LAS_FOTOS = [
   'fondos/fondo-mensaje.jpeg',
   'fondos/fondo-recordatorio.jpeg',
   'fondos/fondo-familia.jpeg',
+  'fondos/fondo-general.jpeg',
   'fotos_principal/foto-1-principal.jpeg',
   'fotos_principal/foto-2-principal.jpeg',
   'fotos_principal/foto-3-principal.jpeg',

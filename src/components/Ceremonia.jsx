@@ -36,7 +36,15 @@ export default function Ceremonia() {
   }, [fotos.length]);
 
   return (
-    <section className="h-screen w-screen flex flex-col items-center snap-start px-5 py-4 bg-rosa-fondo relative overflow-hidden text-center select-none">
+    <section className="h-screen w-screen flex flex-col items-center snap-start px-5 py-4 bg-[#f7ebe8] relative overflow-hidden text-center select-none">
+
+      {/* IMAGEN DE FONDO (Marco rococó y rosas en las esquinas) */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: `url('${BASE}fondos/fondo-general.jpeg')`,
+        }}
+      />
 
       {/* FONDO ANIMADO: Halo Dorado Suave & Destellos ✦ */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center">

@@ -11,8 +11,18 @@ const destellosVestimenta = [
 ];
 
 export default function Vestimenta() {
+  const BASE = import.meta.env.BASE_URL;
+
   return (
-    <section className="h-screen w-screen flex flex-col justify-between items-center snap-start px-6 pt-10 pb-12 bg-rosa-fondo text-center relative overflow-hidden select-none">
+    <section className="h-screen w-screen flex flex-col justify-between items-center snap-start px-6 pt-10 pb-12 bg-[#f7ebe8] text-center relative overflow-hidden select-none">
+      
+      {/* IMAGEN DE FONDO (Marco rococó y rosas en las esquinas) */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: `url('${BASE}fondos/fondo-general.jpeg')`,
+        }}
+      />
       
       {/* FONDO ANIMADO: Halo Dorado Suave & Destellos ✦ */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center">

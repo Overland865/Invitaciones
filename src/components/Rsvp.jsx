@@ -4,6 +4,7 @@ import { Send, Check, X, ArrowLeft } from 'lucide-react';
 import { supabase } from '../supabaseClient';
 
 export default function Rsvp({ invitado = { nombre: 'Invitado Especial', pases: 2 } }) {
+  const BASE = import.meta.env.BASE_URL;
   const [opcion, setOpcion] = useState(null);
   const [pasesSeleccionados, setPasesSeleccionados] = useState(invitado.pases || 1);
   const [cargando, setCargando] = useState(false);
@@ -83,7 +84,7 @@ export default function Rsvp({ invitado = { nombre: 'Invitado Especial', pases: 
     };
   }, [opcion]);
 
-  const numeroWhatsApp = "529993188334";
+  const numeroWhatsApp = "5219999936038";
 
   const enviarWhatsApp = async (e) => {
     e.preventDefault();
@@ -167,7 +168,15 @@ export default function Rsvp({ invitado = { nombre: 'Invitado Especial', pases: 
   return (
     <>
       {/* VISTA PRINCIPAL */}
-      <section className="h-screen w-screen flex flex-col justify-between items-center snap-start px-6 py-10 sm:py-12 bg-rosa-fondo relative overflow-hidden select-none">
+      <section className="h-screen w-screen flex flex-col justify-between items-center snap-start px-6 py-10 sm:py-12 bg-[#f7ebe8] relative overflow-hidden select-none">
+
+        {/* IMAGEN DE FONDO (Marco rococó y rosas en las esquinas) */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: `url('${BASE}fondos/fondo-general.jpeg')`,
+          }}
+        />
 
         {/* FONDO ANIMADO: Halo Dorado Sutil y Micro-Destellos */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center">
@@ -288,7 +297,7 @@ export default function Rsvp({ invitado = { nombre: 'Invitado Especial', pases: 
                     ✦ Asistencia Registrada ✦
                   </span>
                   <h3 className="font-serif text-xl sm:text-2xl text-rosa-principal font-bold leading-tight">
-                    ¡Gracias por Confirmar!
+                    ¡Gracias por confirmar!
                   </h3>
                   <div className="bg-rosa-fondo/70 py-2 px-4 rounded-xl border border-dorado-claro/50 w-full mt-1">
                     <p className="text-xs text-texto-suave">
@@ -296,7 +305,7 @@ export default function Rsvp({ invitado = { nombre: 'Invitado Especial', pases: 
                     </p>
                   </div>
                   <p className="text-xs text-texto-suave font-light mt-1 italic">
-                    ¡Te esperamos con mucha ilusión para celebrar juntos! 💕
+                    ¡Te esperamos con mucha ilusión para celebrar juntos!
                   </p>
                 </>
               ) : (
@@ -311,7 +320,7 @@ export default function Rsvp({ invitado = { nombre: 'Invitado Especial', pases: 
                     Respuesta Recibida
                   </h3>
                   <p className="text-xs text-texto-suave font-light leading-relaxed px-1">
-                    Registraste que no podrás asistir. Agradecemos mucho tu aviso y tus buenos deseos. 💕
+                    Registraste que no podrás asistir. Agradecemos mucho tu aviso.
                   </p>
                 </>
               )}

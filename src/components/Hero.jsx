@@ -30,7 +30,7 @@ export default function Hero({ onEntrar }) {
           className="flex flex-col items-center"
         >
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif text-rosa-principal font-bold tracking-wide drop-shadow-[0_2px_12px_rgba(255,255,255,0.98)] text-center px-4">
-            Yoselin García
+            Rosario Yoselin
           </h1>
           <div className="flex items-center gap-2.5 mt-2 opacity-85">
             <span className="w-10 sm:w-16 h-px bg-dorado-principal/70" />

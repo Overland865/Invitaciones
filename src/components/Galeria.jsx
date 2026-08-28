@@ -89,7 +89,15 @@ export default function Galeria() {
   };
 
   return (
-    <section className="h-screen w-screen flex flex-col items-center snap-start bg-rosa-fondo relative overflow-hidden text-center px-4 py-4 select-none">
+    <section className="h-screen w-screen flex flex-col items-center snap-start bg-[#f7ebe8] relative overflow-hidden text-center px-4 py-4 select-none">
+
+      {/* IMAGEN DE FONDO (Marco rococó y rosas en las esquinas) */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: `url('${BASE}fondos/fondo-general.jpeg')`,
+        }}
+      />
 
       {/* FONDO ANIMADO: Halo Dorado Suave & Destellos ✦ */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center">
