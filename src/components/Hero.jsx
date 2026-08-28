@@ -1,103 +1,62 @@
 import { motion } from 'framer-motion';
 import Contador from './Contador';
 
-// Coordenadas de estrellas fijas para el fondo de destellos
-const destellosHero = [
-  { top: '12%', left: '14%', size: 'text-lg', delay: 0 },
-  { top: '20%', right: '16%', size: 'text-sm', delay: 1.5 },
-  { top: '42%', left: '10%', size: 'text-base', delay: 0.8 },
-  { top: '58%', right: '10%', size: 'text-lg', delay: 2.2 },
-  { bottom: '18%', left: '16%', size: 'text-sm', delay: 1.1 },
-  { bottom: '12%', right: '18%', size: 'text-base', delay: 2.8 },
-];
-
 export default function Hero({ onEntrar }) {
-  return (
-    <section className="h-screen w-screen flex flex-col justify-center items-center relative overflow-hidden p-5 bg-rosa-fondo select-none">
-      
-      {/* FONDO ANIMADO: Halo Dorado Suave & Destellos ✦ */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center">
-        {/* Resplandor central pulsante (acelerado por GPU) */}
-        <motion.div 
-          className="absolute w-72 sm:w-96 h-72 sm:h-96 rounded-full bg-[radial-gradient(circle,rgba(197,160,89,0.25)_0%,transparent_70%)] pointer-events-none"
-          animate={{ scale: [1, 1.2, 1], opacity: [0.35, 0.75, 0.35] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        />
+  const BASE = import.meta.env.BASE_URL;
 
-        {destellosHero.map((d, i) => (
-          <motion.span
-            key={i}
-            className={`absolute text-dorado-principal ${d.size}`}
-            style={{
-              top: d.top,
-              bottom: d.bottom,
-              left: d.left,
-              right: d.right,
-            }}
-            animate={{
-              opacity: [0.2, 0.95, 0.2],
-              scale: [0.75, 1.3, 0.75],
-              rotate: [0, 90, 0],
-            }}
-            transition={{
-              duration: 3.5 + (i % 2),
-              delay: d.delay,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            ✦
-          </motion.span>
-        ))}
+  return (
+    <section 
+      onClick={onEntrar}
+      className="h-screen w-screen flex flex-col justify-between items-center relative overflow-hidden px-4 pt-10 pb-6 select-none bg-[#f7ebe8] cursor-pointer"
+    >
+      
+      {/* IMAGEN DE FONDO */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: `url('${BASE}fondos/fondo-hero.jpeg')`,
+        }}
+      />
+
+      {/* Gradiente de luz muy suave */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-black/10 pointer-events-none" />
+
+      {/* 1. SECCIÓN SUPERIOR: Nombre de la Quinceañera ubicado BIEN ABAJO de 'Mis 15 Años' */}
+      <div className="w-full pt-[38vh] sm:pt-[40vh] z-10 flex flex-col items-center justify-center text-center pointer-events-none">
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, delay: 0.2 }}
+          className="flex flex-col items-center"
+        >
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif text-rosa-principal font-bold tracking-wide drop-shadow-[0_2px_12px_rgba(255,255,255,0.98)] text-center px-4">
+            Yoselin García
+          </h1>
+          <div className="flex items-center gap-2.5 mt-2 opacity-85">
+            <span className="w-10 sm:w-16 h-px bg-dorado-principal/70" />
+            <span className="text-dorado-principal text-sm">✦</span>
+            <span className="w-10 sm:w-16 h-px bg-dorado-principal/70" />
+          </div>
+        </motion.div>
       </div>
 
-      <motion.div
-        className="flex flex-col items-center justify-center text-center mb-4 sm:mb-6 z-10"
-        initial={{ opacity: 0, y: -40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-      >
-        <span className="font-serif text-lg sm:text-xl md:text-2xl text-dorado-oscuro tracking-[0.35em] uppercase font-light mb-1">
-          Mis
-        </span>
-        <h1 className="text-5xl sm:text-6xl md:text-7xl font-serif text-rosa-principal font-semibold tracking-wide drop-shadow-sm">
-          XV Años
-        </h1>
-      </motion.div>
-
-      <motion.div 
-        className="flex justify-center items-center h-48 mb-6 cursor-pointer z-10"
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 1, delay: 0.5 }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        onClick={onEntrar}
-      >
-        {/* Número 15 en Dorado con Brillo */}
-        <div className="font-serif text-[8rem] font-semibold text-dorado-principal drop-shadow-brillo animate-[bounce_4s_infinite]">
-          15
-        </div>
-      </motion.div>
-
-      {/* Indicador de entrada */}
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: [0.6, 1, 0.6] }}
-        transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
-        className="text-xs sm:text-sm font-sans tracking-[0.25em] text-rosa-oscuro uppercase cursor-pointer mb-3 z-10 select-none"
-        onClick={onEntrar}
-      >
-        ✦ Toca para abrir ✦
-      </motion.p>
-
-      {/* Contador */}
+      {/* 2. SECCIÓN INFERIOR: Texto 'Toca para abrir' (SIN RESALTADO BLANCO) + Contador */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1, duration: 1 }}
-        className="z-10"
+        transition={{ delay: 0.5, duration: 1 }}
+        className="w-full max-w-xs sm:max-w-sm z-10 flex flex-col items-center gap-2 pb-2 sm:pb-4"
       >
+        {/* Texto de llamada a la acción limpio y elegante */}
+        <motion.p
+          animate={{ opacity: [0.75, 1, 0.75], scale: [0.98, 1.02, 0.98] }}
+          transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
+          className="text-xs sm:text-sm font-sans tracking-[0.3em] text-rosa-principal font-bold uppercase drop-shadow-[0_1px_6px_rgba(255,255,255,0.95)]"
+        >
+          ✦ Toca para abrir ✦
+        </motion.p>
+
+        {/* Contador sin recuadro contenedor */}
         <Contador />
       </motion.div>
 

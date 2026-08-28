@@ -15,6 +15,10 @@ import ReproductorMusica from './components/ReproductorMusica';
 
 // Lista de todas las imágenes para precarga inmediata en memoria
 const TODAS_LAS_FOTOS = [
+  'fondos/fondo-hero.jpeg',
+  'fondos/fondo-mensaje.jpeg',
+  'fondos/fondo-recordatorio.jpeg',
+  'fondos/fondo-familia.jpeg',
   'fotos_principal/foto-1-principal.jpeg',
   'fotos_principal/foto-2-principal.jpeg',
   'fotos_principal/foto-3-principal.jpeg',
