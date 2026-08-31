@@ -7,7 +7,7 @@ export default function Hero({ onEntrar }) {
   return (
     <section 
       onClick={onEntrar}
-      className="h-screen w-screen flex flex-col justify-between items-center relative overflow-hidden px-4 pt-10 pb-6 select-none bg-[#f7ebe8] cursor-pointer"
+      className="h-[100dvh] w-screen flex flex-col justify-between items-center relative overflow-hidden px-4 pt-8 pb-10 sm:pb-12 select-none bg-[#f7ebe8] cursor-pointer"
     >
       
       {/* IMAGEN DE FONDO */}
@@ -22,7 +22,7 @@ export default function Hero({ onEntrar }) {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-black/10 pointer-events-none" />
 
       {/* 1. SECCIÓN SUPERIOR: Nombre de la Quinceañera ubicado BIEN ABAJO de 'Mis 15 Años' */}
-      <div className="w-full pt-[38vh] sm:pt-[40vh] z-10 flex flex-col items-center justify-center text-center pointer-events-none">
+      <div className="w-full pt-[36vh] sm:pt-[38vh] z-10 flex flex-col items-center justify-center text-center pointer-events-none">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -40,23 +40,34 @@ export default function Hero({ onEntrar }) {
         </motion.div>
       </div>
 
-      {/* 2. SECCIÓN INFERIOR: Texto 'Toca para abrir' (SIN RESALTADO BLANCO) + Contador */}
+      {/* 2. SECCIÓN INFERIOR: Botón cápsula resaltado 'Toca para abrir' + Contador elevado */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 1 }}
-        className="w-full max-w-xs sm:max-w-sm z-10 flex flex-col items-center gap-2 pb-2 sm:pb-4"
+        className="w-full max-w-xs sm:max-w-sm z-10 flex flex-col items-center gap-3 pb-4 sm:pb-6"
       >
-        {/* Texto de llamada a la acción limpio y elegante */}
-        <motion.p
-          animate={{ opacity: [0.75, 1, 0.75], scale: [0.98, 1.02, 0.98] }}
+        {/* Cápsula elegante y visible que invita a interactuar */}
+        <motion.div
+          animate={{ 
+            scale: [1, 1.03, 1],
+            boxShadow: [
+              '0 4px 14px rgba(197, 160, 89, 0.2)',
+              '0 6px 20px rgba(197, 160, 89, 0.45)',
+              '0 4px 14px rgba(197, 160, 89, 0.2)'
+            ]
+          }}
           transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-          className="text-xs sm:text-sm font-sans tracking-[0.3em] text-rosa-principal font-bold uppercase drop-shadow-[0_1px_6px_rgba(255,255,255,0.95)]"
+          className="bg-white/90 backdrop-blur-md px-5 py-2 rounded-full border border-dorado-claro/90 shadow-md flex items-center gap-2 cursor-pointer"
         >
-          ✦ Toca para abrir ✦
-        </motion.p>
+          <span className="text-dorado-principal text-xs">✦</span>
+          <span className="text-xs sm:text-sm font-sans tracking-[0.25em] text-rosa-principal font-bold uppercase drop-shadow-xs">
+            Toca para abrir
+          </span>
+          <span className="text-dorado-principal text-xs">✦</span>
+        </motion.div>
 
-        {/* Contador sin recuadro contenedor */}
+        {/* Contador */}
         <Contador />
       </motion.div>
 

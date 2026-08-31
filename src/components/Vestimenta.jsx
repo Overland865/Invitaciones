@@ -14,7 +14,7 @@ export default function Vestimenta() {
   const BASE = import.meta.env.BASE_URL;
 
   return (
-    <section className="h-screen w-screen flex flex-col justify-between items-center snap-start px-6 pt-10 pb-12 bg-[#f7ebe8] text-center relative overflow-hidden select-none">
+    <section className="h-[100dvh] w-screen flex flex-col justify-between items-center snap-start px-6 pt-8 pb-10 sm:pb-12 bg-[#f7ebe8] text-center relative overflow-hidden select-none">
       
       {/* IMAGEN DE FONDO (Marco rococó y rosas en las esquinas) */}
       <div 
@@ -149,7 +149,7 @@ export default function Vestimenta() {
             {/* Bolsillo superior con pañuelo */}
             <path d="M86 104 H102 V115 H86 Z" stroke="currentColor" strokeWidth="2" />
             <path d="M91 104 L94 94 L97 104" stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round" />
-            <path d="M96 104 L99 96 L101 104" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+            <path d="M96 104 L99 96 L101 104" stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round" />
 
             {/* Bolsillos inferiores */}
             <path d="M38 152 H54 V162 H38 Z" stroke="currentColor" strokeWidth="1.8" />
@@ -170,26 +170,29 @@ export default function Vestimenta() {
 
       {/* 2. TÍTULO: Código de Vestimenta */}
       <motion.div
-        className="w-full max-w-sm z-10 mb-4"
+        className="w-full max-w-sm z-10 mb-2"
         initial={{ opacity: 0, y: 15 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false, amount: 0.2 }}
         transition={{ duration: 0.8, delay: 0.2 }}
       >
-        <h2 className="text-4xl sm:text-5xl md:text-6xl font-serif text-rosa-principal tracking-wide font-bold mb-3 drop-shadow-xs">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-rosa-principal tracking-wide font-bold drop-shadow-xs">
           Código de Vestimenta
         </h2>
       </motion.div>
 
-      {/* 3. FORMATO CLÁSICO: Distintivo FORMAL enmarcado con líneas doradas */}
+      {/* 3. DISTINTIVO FORMAL: Recuadro blanco glassmorphism con marco dorado para máxima legibilidad */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: false, amount: 0.2 }}
         transition={{ duration: 0.8, delay: 0.35 }}
-        className="border-y border-dorado-claro/90 py-3.5 px-14 sm:px-20 z-10 mb-2"
+        className="bg-white/90 backdrop-blur-md py-3 px-10 sm:px-14 rounded-2xl shadow-lg border border-dorado-claro/90 z-10 mb-2 sm:mb-4 relative overflow-hidden"
       >
-        <p className="text-2xl sm:text-3xl text-texto-principal font-light tracking-[0.45em] uppercase drop-shadow-xs">
+        {/* Resplandor sutil arriba */}
+        <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-dorado-claro to-transparent opacity-80" />
+        
+        <p className="text-xl sm:text-2xl font-serif text-dorado-oscuro font-bold tracking-[0.4em] uppercase drop-shadow-xs">
           Formal
         </p>
       </motion.div>
